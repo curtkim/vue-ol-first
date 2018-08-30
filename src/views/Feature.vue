@@ -10,22 +10,25 @@ import BasicMap from '../components/BasicMap.vue'
 
 import proj4 from 'proj4'
 
-import proj from 'ol/proj'
-import VectorLayer from 'ol/layer/vector'
-import VectorSource from 'ol/source/vector'
-import TopoJSON from 'ol/format/topojson'
-import Style from 'ol/style/style'
-import Stroke from 'ol/style/stroke'
-import Fill from 'ol/style/fill'
-import Select from 'ol/interaction/select'
+import {get} from 'ol/proj'
+import {register} from 'ol/proj/proj4'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import TopoJSON from 'ol/format/TopoJSON'
+import Style from 'ol/style/Style'
+import Stroke from 'ol/style/Stroke'
+import Fill from 'ol/style/Fill'
+import Select from 'ol/interaction/Select'
 
 import koeaRegionTopo from '../korea-region-topo.json'
 
 proj4.defs("EPSG:5181","+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+register(proj4)
 
 let topoJson = new TopoJSON({
-  defaultDataProjection: proj.get('EPSG:5181')
+  dataProjection: get('EPSG:5181')
 })
+
 
 // eslint-disable-next-line
 let customStyleFunction = function(feature, resolution) {

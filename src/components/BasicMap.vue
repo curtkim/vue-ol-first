@@ -4,10 +4,10 @@
 
 <script>
 import 'ol/ol.css'
-import Map from 'ol/map'
-import View from 'ol/view'
-import Tile from 'ol/layer/tile'
-import Zoom from 'ol/control/zoom'
+import Map from 'ol/Map'
+import View from 'ol/View'
+import Tile from 'ol/layer/Tile'
+import Zoom from 'ol/control/Zoom'
 import DaumImg from '../ol-daum'
 
 export default {
