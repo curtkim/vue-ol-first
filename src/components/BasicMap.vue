@@ -10,6 +10,7 @@ import Tile from 'ol/layer/Tile'
 import Zoom from 'ol/control/Zoom'
 import DaumImg from '../ol-daum'
 
+
 export default {
   name: 'BasicMap',
   props: [
@@ -26,6 +27,9 @@ export default {
     if( this.layer )
       layers.push(this.layer)
 
+    /* eslint-disable */
+    console.log(layers)
+
     this.map = new Map({
       layers,
       target: this.$el,
@@ -33,7 +37,7 @@ export default {
         center: this.view.center,
         zoom: 14 - this.view.level,
         maxZoom: 14,
-        maxResolution: 2048 // 14level(zoom=0)에서 1px은 2048m와 같다
+        maxResolution: 2048, // 14level(zoom=0)에서 1px은 2048m와 같다
       }),
       controls: [
         new Zoom()
@@ -52,6 +56,7 @@ export default {
       })
     })
   },
+
   methods: {
     viewChange: function(view){
       this.$emit('view-change', view)

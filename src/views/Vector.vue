@@ -6,6 +6,8 @@
 </template>
 
 <script>
+/* eslint-disable */
+
 import BasicMap from '../components/BasicMap.vue'
 
 import proj4 from 'proj4'
@@ -15,23 +17,27 @@ import {register} from 'ol/proj/proj4'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import TopoJSON from 'ol/format/TopoJSON'
+import GeoJSON from 'ol/format/GeoJSON'
 import Style from 'ol/style/Style'
 import Stroke from 'ol/style/Stroke'
 import Fill from 'ol/style/Fill'
 import Select from 'ol/interaction/Select'
 
-import koeaRegionTopo from '../korea-region-topo.json'
+import koreaRegionTopo from '../korea-region-topo.json'
+import geoJson from '../geo.json'
 
 proj4.defs("EPSG:5181","+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 register(proj4)
 
-let topoJson = new TopoJSON({
+const features = new TopoJSON({
   dataProjection: get('EPSG:5181')
-})
+}).readFeaturesFromObject(koreaRegionTopo)
 
 
 // eslint-disable-next-line
 let customStyleFunction = function(feature, resolution) {
+  //console.log(feature.get('HCODE'))
+  //console.log(feature.get('geometry'))
   return [
     new Style({
       stroke: new Stroke({
@@ -76,7 +82,7 @@ export default {
       },
       layer: new VectorLayer({
         title: 'vector',
-        source: new VectorSource({features : topoJson.readFeaturesFromObject(koeaRegionTopo)}),
+        source: new VectorSource({features}),
         style: customStyleFunction,
         opacity: 0.3,
       }),
@@ -93,6 +99,12 @@ export default {
       // eslint-disable-next-line
       console.log( e.target.getFeatures().item(0).get('HCODE') )
     }
+  },
+  beforeDestroy(){
+    console.log('beforeDestroy')
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('beforeRouteUpdate')
   }
 }
 </script>
