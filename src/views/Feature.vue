@@ -1,12 +1,12 @@
 <template>
   <div>
-    <basic-map :view='mapView' v-on:view-change='updateMapView' :layer='layer'></basic-map>
+    <basic-map :view='mapView' v-on:view-change='updateMapView' :layer='layer'
+    :interaction='interaction'></basic-map>
   </div>
 </template>
 
 <script>
 import BasicMap from '../components/BasicMap.vue'
-
 
 import proj4 from 'proj4'
 
@@ -17,6 +17,7 @@ import TopoJSON from 'ol/format/topojson'
 import Style from 'ol/style/style'
 import Stroke from 'ol/style/stroke'
 import Fill from 'ol/style/fill'
+import Select from 'ol/interaction/select'
 
 import koeaRegionTopo from '../korea-region-topo.json'
 
@@ -26,6 +27,7 @@ let topoJson = new TopoJSON({
   defaultDataProjection: proj.get('EPSG:5181')
 })
 
+// eslint-disable-next-line
 let customStyleFunction = function(feature, resolution) {
   return [
     new Style({
@@ -41,7 +43,7 @@ let customStyleFunction = function(feature, resolution) {
 }
 
 /*
-[
+let style = [
   new Style({
     stroke: new Stroke({
       color: 'blue',
@@ -61,6 +63,9 @@ export default {
   mounted(){
   },
   data(){
+    let selectSingleClick = new Select()
+    selectSingleClick.on('select', this.onSelect)
+
     return {
       mapView: {
         level: 5,
@@ -71,12 +76,19 @@ export default {
         source: new VectorSource({features : topoJson.readFeaturesFromObject(koeaRegionTopo)}),
         style: customStyleFunction,
         opacity: 0.3,
-      })
+      }),
+      interaction: selectSingleClick,
     }
   },
   methods: {
     updateMapView: function(view){
       this.mapView = view
+    },
+    onSelect: function(e){
+      // eslint-disable-next-line
+      console.log( e.target.getFeatures().item(0).getKeys() )
+      // eslint-disable-next-line
+      console.log( e.target.getFeatures().item(0).get('HCODE') )
     }
   }
 }

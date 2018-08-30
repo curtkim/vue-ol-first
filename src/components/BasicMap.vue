@@ -14,7 +14,8 @@ export default {
   name: 'BasicMap',
   props: [
     'view',
-    'layer'
+    'layer',
+    'interaction',
   ],
   mounted: function(){
     var daumImgLayer = new Tile({
@@ -38,6 +39,9 @@ export default {
         new Zoom()
       ]
     })
+
+    if( this.interaction)
+      this.map.addInteraction(this.interaction)
 
     let _self = this
     this.map.getView().on('change', function(e){
