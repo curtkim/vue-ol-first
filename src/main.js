@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from "vue-router"
 import Basic from './views/Basic.vue'
-import Feature from './views/Feature.vue'
+import Vector from './views/Vector.vue'
 
 Vue.config.productionTip = false
 
@@ -13,7 +13,7 @@ const router = new VueRouter({
   //base: __dirname,
   routes: [
     { path: "/basic", component: Basic},
-    { path: "/feature", component: Feature},
+    { path: "/vector", component: Vector},
   ]
 });
 

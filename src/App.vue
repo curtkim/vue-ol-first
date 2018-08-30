@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <ul>
+    <ul class='navi'>
       <li><router-link to="/basic">basic</router-link></li>
-      <li><router-link to="/feature">feature</router-link></li>
+      <li><router-link to="/vector">vector</router-link></li>
     </ul>
     <router-view></router-view>
   </div>
@@ -15,5 +15,14 @@ export default {
 }
 </script>
 
-<style>
+<style >
+body {
+  margin: 0;
+  padding: 0;
+}
+
+ul.navi li {
+  display: inline-block;
+  margin-right: 15px;
+}
 </style>
