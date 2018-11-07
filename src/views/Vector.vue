@@ -1,14 +1,18 @@
 <template>
   <div>
-    <basic-map :view='mapView' v-on:view-change='updateMapView' :layer='layer'
-    :interaction='interaction'></basic-map>
+    <ol-map :view='mapView' v-on:view-change='updateMapView' :interaction='interaction'>
+      <ol-tile-layer :source='daumImgSource'></ol-tile-layer>
+      <ol-vector-layer :source='vectorSource' :layer-style='vectorStyle'></ol-vector-layer>
+    </ol-map>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 
-import BasicMap from '../components/BasicMap.vue'
+import OlMap from '../components/OlMap.vue'
+import OlTileLayer from '../components/OlTileLayer.vue'
+import OlVectorLayer from '../components/OlVectorLayer.vue'
 
 import proj4 from 'proj4'
 
@@ -22,6 +26,8 @@ import Style from 'ol/style/Style'
 import Stroke from 'ol/style/Stroke'
 import Fill from 'ol/style/Fill'
 import Select from 'ol/interaction/Select'
+
+import DaumImg from '../ol-daum'
 
 import koreaRegionTopo from '../korea-region-topo.json'
 import geoJson from '../geo.json'
@@ -67,7 +73,7 @@ let style = [
 
 export default {
   components: {
-    BasicMap
+    OlMap, OlTileLayer, OlVectorLayer
   },
   mounted(){
   },
@@ -80,13 +86,10 @@ export default {
         level: 5,
         center: [195063,442898]
       },
-      layer: new VectorLayer({
-        title: 'vector',
-        source: new VectorSource({features}),
-        style: customStyleFunction,
-        opacity: 0.3,
-      }),
       interaction: selectSingleClick,
+      daumImgSource: new DaumImg(),
+      vectorSource: new VectorSource({features}),
+      vectorStyle: customStyleFunction,
     }
   },
   methods: {

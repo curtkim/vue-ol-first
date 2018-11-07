@@ -1,15 +1,14 @@
 <template>
-  <div class="map" tabindex="0"></div>
+  <div class="map" tabindex="0">
+    <slot/>
+  </div>
 </template>
 
 <script>
 import 'ol/ol.css'
 import Map from 'ol/Map'
 import View from 'ol/View'
-import Tile from 'ol/layer/Tile'
 import Zoom from 'ol/control/Zoom'
-import DaumImg from '../ol-daum'
-
 
 export default {
   name: 'BasicMap',
@@ -18,21 +17,14 @@ export default {
     'layer',
     'interaction',
   ],
-  mounted: function(){
-    var daumImgLayer = new Tile({
-      source: new DaumImg()
-    })
-
-    let layers = [daumImgLayer]
+  created: function(){
+    let layers = []
     if( this.layer )
       layers.push(this.layer)
 
-    /* eslint-disable */
-    console.log(layers)
-
     this.map = new Map({
       layers,
-      target: this.$el,
+      //target: this.$el,
       view: new View({
         center: this.view.center,
         zoom: 14 - this.view.level,
@@ -43,6 +35,15 @@ export default {
         new Zoom()
       ]
     })
+
+    /* eslint-disable */
+    console.log('olmap created')
+  },
+  mounted: function(){
+    /* eslint-disable */
+    console.log('olmap mounted')
+
+    this.map.setTarget(this.$el)
 
     if( this.interaction)
       this.map.addInteraction(this.interaction)
