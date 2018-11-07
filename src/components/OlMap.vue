@@ -14,16 +14,10 @@ export default {
   name: 'BasicMap',
   props: [
     'view',
-    'layer',
     'interaction',
   ],
   created: function(){
-    let layers = []
-    if( this.layer )
-      layers.push(this.layer)
-
     this.map = new Map({
-      layers,
       //target: this.$el,
       view: new View({
         center: this.view.center,

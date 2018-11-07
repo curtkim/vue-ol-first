@@ -1,8 +1,8 @@
 <template>
   <div>
     <ol-map :view='mapView' v-on:view-change='updateMapView' :interaction='interaction'>
-      <ol-tile-layer :source='daumImgSource'></ol-tile-layer>
-      <ol-vector-layer :source='vectorSource' :layer-style='vectorStyle'></ol-vector-layer>
+      <ol-tile-layer :source='daumImgSource'/>
+      <ol-vector-layer :layer-source='vectorSource' :layer-style='vectorStyle'/>
     </ol-map>
   </div>
 </template>

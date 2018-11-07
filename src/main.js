@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueRouter from "vue-router"
 import Basic from './views/Basic.vue'
 import Vector from './views/Vector.vue'
+import DynamicAdd from './views/DynamicAdd.vue'
 
 Vue.config.productionTip = false
 
@@ -14,6 +15,7 @@ const router = new VueRouter({
   routes: [
     { path: "/basic", component: Basic},
     { path: "/vector", component: Vector},
+    { path: "/dynamicAdd", component: DynamicAdd},
   ]
 });
 

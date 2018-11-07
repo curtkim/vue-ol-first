@@ -3,6 +3,7 @@
     <ul class='navi'>
       <li><router-link to="/basic">basic</router-link></li>
       <li><router-link to="/vector">vector</router-link></li>
+      <li><router-link to="/dynamicAdd">dynamic add</router-link></li>
     </ul>
     <router-view></router-view>
   </div>
