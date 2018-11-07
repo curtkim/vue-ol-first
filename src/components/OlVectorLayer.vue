@@ -13,7 +13,7 @@ export default {
     /* eslint-disable */
     console.log('OlVectorLayer mounted')
 
-    let source = new VectorSource({features: this.features}) || this.layerSource
+    let source = this.features ? new VectorSource({features: this.features}) : this.layerSource
     let layer = new VectorLayer({
         title: 'vector',
         source: source,
