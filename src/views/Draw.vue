@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button v-on:click='addFeature'>add feature</button>
-    <br/>
-    <ol-map :view='mapView' v-on:view-change='updateMapView'>
+    <ol-map :view='mapView' v-on:view-change='updateMapView' :interaction='interaction'>
       <ol-tile-layer :source='daumImgSource'/>
       <ol-vector-layer :features='features' :layer-style='vectorStyle'/>
     </ol-map>
@@ -23,9 +21,11 @@ import Stroke from 'ol/style/Stroke'
 import Fill from 'ol/style/Fill'
 import GeoJSON from 'ol/format/GeoJSON'
 
+import Draw from 'ol/interaction/Draw'
+
 import DaumImg from '../ol-daum'
 
-/*
+
 let style = [
   new Style({
     stroke: new Stroke({
@@ -37,39 +37,6 @@ let style = [
     })
   })
 ]
-*/
-
-let customStyleFunction = function(feature, resolution) {
-  return [
-    new Style({
-      stroke: new Stroke({
-        color: 'blue',
-        width: 3
-      }),
-      fill: new Fill({
-        color: 'rgba(0, 0, ' + feature.get('value') + ', 1)'
-      })
-    })
-  ];
-}
-
-
-let geojsonObject = {
-  'type': 'FeatureCollection',
-  'features': [{
-    'type': 'Feature',
-    'geometry': {
-      'type': 'Polygon',
-      'coordinates': [
-        [[0, 0], [200000, 0],[100000, 100000],[0, 0]]
-      ]
-    },
-    'properties': {
-      "value": 10
-    }
-  }]
-};
-let samples = new GeoJSON().readFeatures(geojsonObject)
 
 export default {
   components: {
@@ -78,24 +45,30 @@ export default {
   mounted(){
   },
   data(){
+    let draw = new Draw({
+      //features: this.features,
+      type: 'Polygon'
+    })
+    draw.on('drawend', this.onDraw)
+
     return {
       mapView: {
         level: 13,
         center: [195063,242898]
       },
+      interaction: draw,
       daumImgSource: new DaumImg(),
       //vectorSource: new VectorSource({features}),
       features: [],
-      vectorStyle: customStyleFunction,
+      vectorStyle: style,
     }
   },
   methods: {
     updateMapView: function(view){
       this.mapView = view
     },
-    addFeature: function(){
-      console.log('addFeature')
-      this.features = samples
+    onDraw: function(event){
+      this.features = [event.feature]
     },
   },
   beforeDestroy(){

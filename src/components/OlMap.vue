@@ -39,8 +39,10 @@ export default {
 
     this.map.setTarget(this.$el)
 
-    if( this.interaction)
+    if( this.interaction) {
+      console.log(this.interaction)
       this.map.addInteraction(this.interaction)
+    }
 
     let _self = this
     this.map.getView().on('change', function(e){
